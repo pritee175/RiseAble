@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String                    @id @default(cuid())
+  email                  String                    @unique
+  name                   String?
+  password               String?
+  createdAt              DateTime                  @default(now())
+  updatedAt              DateTime                  @updatedAt
+  accessibilitySettings  AccessibilitySettings?
+}
+
+model AccessibilitySettings {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Accessibility Features
+  voiceNavigation Boolean  @default(false)
+  screenReader    Boolean  @default(false)
+  highContrast    Boolean  @default(false)
+  largeText       Boolean  @default(false)
+  keyboardNav     Boolean  @default(false)
+  
+  // Metadata
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

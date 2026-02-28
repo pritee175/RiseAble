@@ -35,6 +35,11 @@ import {
   LogOut,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useAccessibility } from '@/hooks/use-accessibility'
+import { useApplyAccessibilitySettings } from '@/hooks/use-apply-accessibility'
+import { useVoiceNavigation } from '@/hooks/use-voice-navigation'
+import { useKeyboardDetection } from '@/hooks/use-keyboard-detection'
+import VoiceIndicator from '@/components/ui/voice-indicator'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -48,14 +53,16 @@ const navigation = [
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const [accessibilitySettings, setAccessibilitySettings] = useState({
-    voiceNavigation: false,
-    screenReader: false,
-    highContrast: false,
-    largeText: false,
-    keyboardNav: false,
-    signLanguage: false,
-  })
+  
+  // Fetch accessibility settings from backend
+  const { settings: accessibilitySettings, updateSetting, isLoading, error } = useAccessibility()
+  
+  // Apply settings globally to document
+  useApplyAccessibilitySettings(accessibilitySettings)
+  // Start voice navigation service when enabled and receive listening state
+  const isListening = useVoiceNavigation(accessibilitySettings.voiceNavigation)
+  // Enable transient keyboard outlines when user presses Tab (or force via setting)
+  useKeyboardDetection(accessibilitySettings.keyboardNav)
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,7 +151,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       id="voice-nav"
                       checked={accessibilitySettings.voiceNavigation}
                       onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, voiceNavigation: checked })
+                        updateSetting('voiceNavigation', checked)
                       }
                     />
                   </div>
@@ -156,7 +163,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       id="screen-reader"
                       checked={accessibilitySettings.screenReader}
                       onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, screenReader: checked })
+                        updateSetting('screenReader', checked)
                       }
                     />
                   </div>
@@ -168,7 +175,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       id="high-contrast"
                       checked={accessibilitySettings.highContrast}
                       onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, highContrast: checked })
+                        updateSetting('highContrast', checked)
                       }
                     />
                   </div>
@@ -180,7 +187,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       id="large-text"
                       checked={accessibilitySettings.largeText}
                       onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, largeText: checked })
+                        updateSetting('largeText', checked)
                       }
                     />
                   </div>
@@ -192,25 +199,20 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       id="keyboard-nav"
                       checked={accessibilitySettings.keyboardNav}
                       onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, keyboardNav: checked })
+                        updateSetting('keyboardNav', checked)
                       }
                     />
                   </div>
                   <div className="flex items-center justify-between">
-                    <Label htmlFor="sign-language" className="text-sm cursor-pointer">
-                      Sign Language Support
-                    </Label>
-                    <Switch
-                      id="sign-language"
-                      checked={accessibilitySettings.signLanguage}
-                      onCheckedChange={(checked) =>
-                        setAccessibilitySettings({ ...accessibilitySettings, signLanguage: checked })
-                      }
-                    />
-                  </div>
+                    </div>
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Voice listening indicator */}
+            <div className="hidden sm:flex items-center">
+              <VoiceIndicator isListening={isListening} />
+            </div>
 
             {/* Notifications */}
             <DropdownMenu>

@@ -92,3 +92,112 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* ============================================
+   ACCESSIBILITY SETTINGS STYLES
+   ============================================ */
+
+/* High Contrast Mode */
+:root.high-contrast {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 10%;
+  --card-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 60 100% 50%;
+  --secondary-foreground: 0 0% 0%;
+  --border: 0 0% 100%;
+  --input: 0 0% 20%;
+  --muted: 0 0% 30%;
+  --muted-foreground: 0 0% 100%;
+  --accent: 60 100% 50%;
+  --accent-foreground: 0 0% 0%;
+}
+
+:root.high-contrast * {
+  border-width: 2px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Large Text Mode */
+:root.large-text {
+  font-size: 115%;
+}
+
+:root.large-text h1 {
+  font-size: 2rem;
+}
+
+:root.large-text h2 {
+  font-size: 1.75rem;
+}
+
+:root.large-text h3 {
+  font-size: 1.5rem;
+}
+
+:root.large-text button,
+:root.large-text input,
+:root.large-text label {
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Keyboard Navigation Mode */
+:root.keyboard-nav *:focus-visible {
+  outline: 3px solid currentColor !important;
+  outline-offset: 2px !important;
+}
+
+:root.keyboard-nav button:focus-visible,
+:root.keyboard-nav [role="button"]:focus-visible,
+:root.keyboard-nav input:focus-visible,
+:root.keyboard-nav select:focus-visible,
+:root.keyboard-nav textarea:focus-visible,
+:root.keyboard-nav a:focus-visible {
+  outline: 3px dashed hsl(var(--primary)) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
+/* Screen Reader Mode - Enhance semantic HTML */
+[data-screen-reader="true"] .sr-only {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit;
+  overflow: visible !important;
+  clip: auto !important;
+}
+
+/* Improve focus indicators in screen reader mode */
+[data-screen-reader="true"] *:focus {
+  outline: 3px solid hsl(var(--primary)) !important;
+}
+
+/* Voice Navigation Support */
+/* Highlight interactive elements when voice navigation is enabled */
+[data-voice-nav="true"] button,
+[data-voice-nav="true"] a,
+[data-voice-nav="true"] [role="button"] {
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+[data-voice-nav="true"] button:hover,
+[data-voice-nav="true"] a:hover,
+[data-voice-nav="true"] [role="button"]:hover {
+  border-color: hsl(var(--primary));
+}
+
+
+/* Reduce animations when accessibility is enabled */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

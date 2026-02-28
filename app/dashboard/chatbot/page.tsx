@@ -78,7 +78,7 @@ export default function ChatbotPage() {
     }
 
     if (lowerQuery.includes('accessibility') || lowerQuery.includes('feature')) {
-      return "RiseAble offers several accessibility features: voice navigation, screen reader compatibility, high contrast mode, large text options, keyboard navigation, and sign language support. You can customize these in the accessibility menu (the accessibility icon in the top navigation). Which feature would you like help enabling?"
+      return "RiseAble offers several accessibility features: voice navigation, screen reader compatibility, high contrast mode, large text options, and keyboard navigation. You can customize these in the accessibility menu (the accessibility icon in the top navigation). Which feature would you like help enabling?"
     }
 
     if (lowerQuery.includes('scheme') || lowerQuery.includes('government') || lowerQuery.includes('benefit')) {
