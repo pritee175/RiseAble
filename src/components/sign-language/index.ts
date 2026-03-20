@@ -1,0 +1,1 @@
+export { SignLanguageAvatar } from './SignLanguageAvatar';
