@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { BookOpen, Briefcase, ArrowRight, Shield, Mic, Sparkles } from "lucide-react";
+import { Briefcase, ArrowRight, Shield, Mic, Sparkles } from "lucide-react";
 import { HeroIllustration } from "./Illustrations";
 
 export default function HeroSection() {
@@ -49,27 +49,26 @@ export default function HeroSection() {
 
             <p className="animate-fade-in-up delay-200 text-lg mb-10 max-w-lg leading-relaxed"
               style={{ color: "var(--color-text-secondary)" }}>
-              Learn accessible skills. Find inclusive jobs. Access government benefits — all in one platform.
+              Find inclusive jobs. Access government benefits. Get help from an AI assistant — all in one accessible platform.
             </p>
 
             {/* CTA Buttons */}
             <div className="animate-fade-in-up delay-300 flex flex-wrap gap-4 mb-12">
               <Link
-                href="/courses"
+                href="/jobs"
                 className="btn-glow inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-semibold text-base transition-all hover:scale-105 animate-glow"
                 style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
               >
-                <BookOpen size={18} aria-hidden="true" />
-                Explore Courses
+                <Briefcase size={18} aria-hidden="true" />
+                Find Jobs
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
               <Link
-                href="/jobs"
+                href="/schemes"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-base border transition-all hover:scale-105 gradient-border"
                 style={{ borderColor: "var(--color-border)", color: "var(--color-text)" }}
               >
-                <Briefcase size={18} aria-hidden="true" />
-                Find Jobs
+                Explore Schemes
               </Link>
             </div>
 
@@ -130,9 +129,9 @@ export default function HeroSection() {
         {/* Stats bar */}
         <div className="animate-fade-in-up delay-500 mt-16 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden glass-card">
           {[
-            { number: "9+", label: "Courses" },
-            { number: "50+", label: "Jobs" },
+            { number: "8+", label: "Jobs" },
             { number: "8", label: "Schemes" },
+            { number: "9", label: "Languages" },
             { number: "Free", label: "Forever" },
           ].map((stat, i) => (
             <div key={stat.label} className="text-center py-6 px-4"

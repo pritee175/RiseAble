@@ -27,7 +27,6 @@ export default function Footer() {
             <h3 className="font-semibold text-sm mb-3" style={{ color: "var(--color-text)" }}>Quick Links</h3>
             <ul className="space-y-2">
               {[
-                { href: "/courses", label: "Courses" },
                 { href: "/jobs", label: "Find Jobs" },
                 { href: "/schemes", label: "Gov. Schemes" },
                 { href: "/auth", label: "Sign In" },

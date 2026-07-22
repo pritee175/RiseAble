@@ -26,12 +26,12 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <div className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur-md">
-                <p className="text-3xl font-bold text-white">9+</p>
-                <p className="text-sm text-white/80">Courses</p>
+                <p className="text-3xl font-bold text-white">8+</p>
+                <p className="text-sm text-white/80">Job Opportunities</p>
               </div>
               <div className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur-md">
-                <p className="text-3xl font-bold text-white">50+</p>
-                <p className="text-sm text-white/80">Job Opportunities</p>
+                <p className="text-3xl font-bold text-white">8</p>
+                <p className="text-sm text-white/80">Govt. Schemes</p>
               </div>
               <div className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur-md">
                 <p className="text-3xl font-bold text-white">100%</p>

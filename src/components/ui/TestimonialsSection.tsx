@@ -7,7 +7,7 @@ const testimonials = [
   {
     name: "Aarav Mehta",
     role: "Web Developer",
-    quote: "RiseAble's screen reader support is excellent. I completed the web dev course and landed a remote job within 3 months.",
+    quote: "RiseAble's screen reader support is excellent. I found a remote, disability-friendly job through the platform within weeks.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
     gradient: "linear-gradient(135deg, #818cf8, #6366f1)",
@@ -15,7 +15,7 @@ const testimonials = [
   {
     name: "Sneha Deshmukh",
     role: "Data Entry Specialist",
-    quote: "Voice navigation changed everything for me. I browse courses and apply for jobs without struggling with a mouse.",
+    quote: "Voice navigation changed everything for me. I browse and apply for jobs without struggling with a mouse.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80",
     gradient: "linear-gradient(135deg, #a78bfa, #7c3aed)",
@@ -23,7 +23,7 @@ const testimonials = [
   {
     name: "Ravi Kumar",
     role: "Freelance Designer",
-    quote: "Every video has captions and transcripts. The sign language videos in some courses are a great touch.",
+    quote: "The AI assistant explains government schemes clearly, and the sign language avatar is a genuinely useful touch.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
     gradient: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
@@ -76,9 +76,9 @@ export default function TestimonialsSection() {
 
               <div className="relative flex items-center gap-1 mb-5" aria-label={`Rating: ${t.rating} out of 5 stars`}>
                 {Array.from({ length: t.rating }).map((_, j) => (
-                  <Star key={j} size={16} fill="var(--color-warning)" style={{ color: "var(--color-warning)" }} 
-                    className="animate-bounce-subtle" 
-                    style={{ animationDelay: `${j * 0.1}s` }}
+                  <Star key={j} size={16} fill="var(--color-warning)"
+                    style={{ color: "var(--color-warning)", animationDelay: `${j * 0.1}s` }}
+                    className="animate-bounce-subtle"
                     aria-hidden="true" />
                 ))}
               </div>

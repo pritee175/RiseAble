@@ -53,7 +53,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "Hello! I'm the RiseAble AI Assistant. I can help you find courses, search for jobs, or understand government schemes. How can I help you today?",
+      text: "Hello! I'm the RiseAble AI Assistant. I can help you search for jobs or understand government schemes. How can I help you today?",
       sender: "bot",
       timestamp: new Date(),
     },

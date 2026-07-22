@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import {
   User, Mail, Phone, MapPin, Globe, Edit2, Save, X,
-  Camera, Award, BookOpen, Briefcase, Calendar, Shield,
+  Camera, Bookmark, Mic, Volume2, Shield,
   CheckCircle2, Settings, LogOut,
 } from "lucide-react";
 import Link from "next/link";
@@ -63,10 +63,9 @@ export default function ProfilePage() {
   };
 
   const stats = [
-    { label: "Courses Completed", value: "3", icon: BookOpen, color: "#818cf8" },
-    { label: "Jobs Applied", value: "12", icon: Briefcase, color: "#a78bfa" },
-    { label: "Certificates", value: "3", icon: Award, color: "#fbbf24" },
-    { label: "Days Active", value: "45", icon: Calendar, color: "#34d399" },
+    { label: "Saved Jobs", value: String(user.savedJobs.length), icon: Bookmark, color: "#818cf8" },
+    { label: "Sign Language", value: user.accessibilityPreferences.needsSignLanguage ? "On" : "Off", icon: Mic, color: "#a78bfa" },
+    { label: "Audio Description", value: user.accessibilityPreferences.needsAudioDescription ? "On" : "Off", icon: Volume2, color: "#34d399" },
   ];
 
   return (

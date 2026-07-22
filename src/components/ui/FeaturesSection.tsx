@@ -6,12 +6,12 @@ import { WaveDivider } from "./Illustrations";
 
 const features = [
   { icon: Monitor, title: "Screen Reader Compatible", description: "Full ARIA labels and semantic HTML. Works with NVDA, JAWS, VoiceOver.", color: "#818cf8" },
-  { icon: Mic, title: "Voice Navigation", description: "Navigate using voice commands. Say 'open courses' or 'find jobs'.", color: "#a78bfa" },
+  { icon: Mic, title: "Voice Navigation", description: "Navigate using voice commands. Say 'find jobs' or 'open schemes'.", color: "#a78bfa" },
   { icon: Type, title: "Adjustable Text & Fonts", description: "Increase text size, switch to dyslexia-friendly fonts.", color: "#38bdf8" },
   { icon: Eye, title: "High Contrast Mode", description: "Light, dark, and high contrast themes for optimal visibility.", color: "#34d399" },
   { icon: Keyboard, title: "Keyboard Navigation", description: "Tab through every element with clear focus indicators.", color: "#818cf8" },
   { icon: Captions, title: "Captions & Transcripts", description: "All content includes captions, audio, and text transcripts.", color: "#a78bfa" },
-  { icon: Hand, title: "Sign Language Support", description: "Select courses feature sign language interpretation.", color: "#38bdf8" },
+  { icon: Hand, title: "Sign Language Avatar", description: "A 3D avatar interprets AI chatbot replies into Indian Sign Language.", color: "#38bdf8" },
   { icon: Moon, title: "Reduced Motion", description: "Respects system preferences. Toggle animations on or off.", color: "#34d399" },
 ];
 

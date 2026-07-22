@@ -207,8 +207,8 @@ export default function AccessibilityToolbar() {
             <div className="mt-4 p-3 rounded-lg text-xs" style={{ backgroundColor: "var(--color-bg-secondary)", color: "var(--color-text-secondary)" }}>
               <p className="font-semibold mb-1">Voice Commands:</p>
               <ul className="space-y-0.5">
-                <li>&quot;Open courses&quot; — Go to courses</li>
                 <li>&quot;Find jobs&quot; — Go to jobs</li>
+                <li>&quot;Schemes&quot; — Go to schemes</li>
                 <li>&quot;Go home&quot; — Go to homepage</li>
                 <li>&quot;Scroll down/up&quot; — Scroll page</li>
               </ul>

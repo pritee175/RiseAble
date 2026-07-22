@@ -1,44 +1,37 @@
-# RiseAble - Accessible Skills & Jobs Platform
+# RiseAble - Accessible Jobs & Schemes Platform
 
-An accessibility-first platform designed for specially-abled (disabled) individuals to learn skills, find jobs, and access government schemes. Built with WCAG 2.1+ compliance and real accessibility features.
+An accessibility-first platform that helps persons with disabilities in India find inclusive jobs, understand government welfare schemes, and get help from a multilingual AI assistant with a 3D Indian Sign Language avatar. Built with WCAG-conscious UI throughout.
 
 ## Features
 
 ### Core Modules
 - **Hero Landing Page** — Empowering tagline, animated UI, CTA buttons
-- **Courses** — 9+ courses (Tech & Non-Tech) with video, audio, transcripts, captions, and sign language
-- **Job Search** — 8+ listings from disability-friendly employers with filters (remote, skill-based, disability-friendly)
+- **Job Search** — 8 curated listings from disability-friendly employers with filters (remote, category, disability-friendly)
 - **Government Schemes** — 8 India-focused schemes (education, financial aid, employment)
-- **AI Chatbot** — Multilingual (English + Hindi), voice input/output, helps find courses/jobs/schemes
-- **User Dashboard** — Course progress tracking, saved jobs, profile settings
+- **AI Chatbot** — Calls OpenAI (`gpt-3.5-turbo`) when `OPENAI_API_KEY` is set, with a rule-based fallback so the chatbot still answers without a key. Supports 9 languages via live translation.
+- **3D Sign Language Avatar** — A real Three.js + GLTF avatar (`public/models/xbot.glb`) that interprets chatbot replies into Indian Sign Language, driven by hand-authored word/alphabet animation data.
+- **User Dashboard** — Saved jobs and accessibility preferences, backed by real signed-in user state.
 
-### Authentication (Multiple Methods)
-- Email + Password
-- Google Sign-In (simulated)
-- Face Recognition (demo/simulated)
-- Voice Authentication (demo/simulated)
-- Biometric (demo/simulated)
+### Authentication
+- **Email + Password** — Real: backed by `/api/auth/login` and `/api/auth/signup`, validated server-side (duplicate email, password length, wrong-password rejection all enforced). User data is stored in a shared in-memory store (see Known Limitations).
+- **Google / Face / Voice / Biometric** — Explicitly labeled **(Demo)** in the UI. These are simulated for demonstration and do not perform real OAuth or biometric verification.
 
-### Accessibility (WCAG 2.1+ Compliant)
+### Accessibility
 - Screen reader compatible (ARIA labels, semantic HTML, live regions)
-- Voice navigation (say "open courses", "find jobs", "go home")
-- High contrast mode
-- Dark mode
-- Adjustable text size (normal, large, extra large)
-- Dyslexia-friendly font option
-- Keyboard navigation with visible focus indicators
-- Skip-to-content link
+- Voice navigation (say "find jobs", "open schemes", "go home")
+- High contrast mode, dark mode, adjustable text size, dyslexia-friendly font
+- Keyboard navigation with visible focus indicators, skip-to-content link
 - Reduced motion support (respects `prefers-reduced-motion`)
-- Captions and transcripts for all media
-- Sign language support indicators
-- Text-to-speech for course content
+- Text-to-speech and speech-to-text (Web Speech API)
 
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS 4
-- **Icons:** Lucide React
+- **3D:** Three.js + GLTFLoader
+- **AI:** OpenAI Chat Completions API (with rule-based fallback)
+- **Translation:** MyMemory Translation API (free, no key required)
 - **Speech:** Web Speech API (Text-to-Speech + Speech-to-Text)
 - **State:** React Context API
 
@@ -47,42 +40,36 @@ An accessibility-first platform designed for specially-abled (disabled) individu
 ```
 riseable/
 ├── src/
-│   ├── app/                    # Next.js App Router pages
-│   │   ├── layout.tsx          # Root layout with providers
-│   │   ├── page.tsx            # Home/landing page
-│   │   ├── globals.css         # Global styles, themes, animations
-│   │   ├── courses/
-│   │   │   ├── page.tsx        # Courses listing
-│   │   │   └── [id]/page.tsx   # Course detail page
-│   │   ├── jobs/page.tsx       # Job listings
-│   │   ├── schemes/page.tsx    # Government schemes
-│   │   ├── auth/page.tsx       # Authentication
-│   │   └── dashboard/page.tsx  # User dashboard
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── auth/{login,signup,profile}/route.ts   # Real auth endpoints, shared in-memory store
+│   │   │   ├── chat/route.ts                          # OpenAI + rule-based fallback
+│   │   │   └── translate/route.ts                     # MyMemory translation proxy
+│   │   ├── jobs/page.tsx
+│   │   ├── schemes/page.tsx
+│   │   ├── auth/page.tsx
+│   │   ├── chat/page.tsx
+│   │   └── dashboard/page.tsx
 │   ├── components/
 │   │   ├── accessibility/      # Accessibility toolbar, voice nav
-│   │   ├── auth/               # Auth page component
-│   │   ├── chat/               # AI chatbot
-│   │   ├── courses/            # Course card, course detail
-│   │   ├── dashboard/          # Dashboard component
-│   │   ├── jobs/               # Job card component
-│   │   ├── layout/             # Navbar, Footer
-│   │   ├── schemes/            # Scheme card component
-│   │   └── ui/                 # Hero, Features, Testimonials
+│   │   ├── auth/                # Auth page component
+│   │   ├── chat/                # AI chatbot UI
+│   │   ├── sign-language/       # 3D ISL avatar + animation data
+│   │   ├── jobs/, schemes/      # Job/scheme cards
+│   │   ├── dashboard/, profile/
+│   │   └── layout/, ui/
 │   ├── context/
-│   │   ├── AccessibilityContext.tsx  # Theme, text size, font, voice nav
-│   │   └── AuthContext.tsx          # Authentication state
+│   │   ├── AccessibilityContext.tsx
+│   │   └── AuthContext.tsx      # Calls real /api/auth routes for email/password
+│   ├── lib/
+│   │   └── userStore.ts         # Shared in-memory user store used by all auth routes
 │   ├── data/
-│   │   ├── courses.ts          # Course data
-│   │   ├── jobs.ts             # Job listings data
-│   │   └── schemes.ts          # Government schemes data
+│   │   ├── jobs.ts
+│   │   └── schemes.ts
 │   └── hooks/
-│       ├── useSpeech.ts        # Text-to-Speech & Speech-to-Text
-│       └── useVoiceNavigation.ts  # Voice command navigation
-├── public/
-├── package.json
-├── tsconfig.json
-├── postcss.config.mjs
-└── next.config.ts
+│       ├── useSpeech.ts
+│       └── useVoiceNavigation.ts
+├── public/models/xbot.glb       # 3D avatar model
 ```
 
 ## Getting Started
@@ -94,37 +81,36 @@ riseable/
 ### Installation
 
 ```bash
-# Clone the repository
 git clone <repo-url>
 cd riseable
-
-# Install dependencies
 npm install
-
-# Start development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Build for Production
+### Environment Variables (optional)
 
-```bash
-npm run build
-npm start
+```
+OPENAI_API_KEY=sk-...   # Optional — chatbot falls back to rule-based responses if unset
 ```
 
-## Accessibility Testing
+### Demo Login
 
-- **Screen Reader:** Test with NVDA (Windows), VoiceOver (Mac), or TalkBack (Android)
-- **Keyboard:** Tab through all interactive elements — focus indicators should be visible
-- **Voice Navigation:** Enable in accessibility toolbar (gear icon, bottom-right), then say commands
-- **High Contrast:** Toggle via accessibility toolbar
-- **Text Size:** Adjust via accessibility toolbar
+```
+Email: demo@riseable.com
+Password: demo123
+```
 
-## Demo Login
+Or sign up with a new email/password — it's validated and stored for real (in-memory).
 
-Use any email and password to sign in (demo mode). All auth methods (face, voice, biometric) are simulated for demonstration.
+## Known Limitations / Roadmap
+
+- **In-memory user store** — accounts and saved jobs reset when the server restarts. A real database (e.g. Firebase or Postgres) would be the next step for persistence.
+- **No session persistence across page reloads** — auth state lives in React state only; a full page reload logs the user out. Next step: cookies/JWT session.
+- **Face / Voice / Biometric / Google login are simulated** — clearly labeled "(Demo)" in the UI. Real biometric auth would use WebAuthn.
+- **"Apply Now" is a demo action** — no real application pipeline exists yet.
+- **Profile edits (bio/phone/location) are client-side only** — the `/api/auth/profile` PUT endpoint exists but isn't yet wired up from the Profile page.
 
 ## License
 

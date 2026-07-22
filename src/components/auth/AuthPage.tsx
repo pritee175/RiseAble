@@ -31,7 +31,7 @@ export default function AuthPage() {
   const [faceStatus, setFaceStatus] = useState("");
   const [voiceStatus, setVoiceStatus] = useState("");
 
-  const { login, signup, loginWithGoogle, loginWithFace, loginWithVoice } = useAuth();
+  const { login, signup, loginWithGoogle, loginWithFace, loginWithVoice, loginWithBiometric } = useAuth();
   const router = useRouter();
 
   const handleTraditionalSubmit = async (e: React.FormEvent) => {
@@ -39,14 +39,11 @@ export default function AuthPage() {
     setLoading(true);
     setError("");
     try {
-      let success: boolean;
-      if (mode === "login") {
-        success = await login(email, password);
-      } else {
-        success = await signup(name, email, password);
-      }
-      if (success) router.push("/");
-      else setError("Authentication failed. Please try again.");
+      const result = mode === "login"
+        ? await login(email, password)
+        : await signup(name, email, password);
+      if (result.success) router.push("/");
+      else setError(result.error || "Authentication failed. Please try again.");
     } catch {
       setError("An error occurred. Please try again.");
     }
@@ -55,8 +52,8 @@ export default function AuthPage() {
 
   const handleGoogleLogin = async () => {
     setLoading(true);
-    const success = await loginWithGoogle();
-    if (success) router.push("/");
+    const result = await loginWithGoogle();
+    if (result.success) router.push("/");
     setLoading(false);
   };
 
@@ -65,8 +62,8 @@ export default function AuthPage() {
     setTimeout(() => setFaceStatus("Scanning face..."), 1000);
     setTimeout(() => setFaceStatus("Matching features..."), 2000);
     setLoading(true);
-    const success = await loginWithFace();
-    if (success) {
+    const result = await loginWithFace();
+    if (result.success) {
       setFaceStatus("Face recognized! Logging in...");
       setTimeout(() => router.push("/"), 500);
     } else {
@@ -78,8 +75,8 @@ export default function AuthPage() {
   const handleVoiceLogin = async () => {
     setVoiceStatus("Listening... Please say your passphrase");
     setLoading(true);
-    const success = await loginWithVoice();
-    if (success) {
+    const result = await loginWithVoice();
+    if (result.success) {
       setVoiceStatus("Voice recognized! Logging in...");
       setTimeout(() => router.push("/"), 500);
     } else {
@@ -90,18 +87,16 @@ export default function AuthPage() {
 
   const handleBiometricLogin = async () => {
     setLoading(true);
-    // Simulate biometric auth
-    await new Promise(r => setTimeout(r, 1500));
-    const success = await login("biometric@demo.com", "demo");
-    if (success) router.push("/");
+    const result = await loginWithBiometric();
+    if (result.success) router.push("/");
     setLoading(false);
   };
 
   const authMethods: { id: AuthMethod; label: string; icon: React.ComponentType<{ size: number }>; description: string }[] = [
     { id: "traditional", label: "Email & Password", icon: Mail, description: "Sign in with email and password" },
-    { id: "face", label: "Face Recognition", icon: Scan, description: "Sign in using your face" },
-    { id: "voice", label: "Voice Auth", icon: Mic, description: "Sign in with your voice" },
-    { id: "biometric", label: "Biometric", icon: Fingerprint, description: "Use fingerprint or biometric" },
+    { id: "face", label: "Face Recognition (Demo)", icon: Scan, description: "Simulated face recognition — not a real biometric check" },
+    { id: "voice", label: "Voice Auth (Demo)", icon: Mic, description: "Simulated voice authentication — not a real biometric check" },
+    { id: "biometric", label: "Biometric (Demo)", icon: Fingerprint, description: "Simulated fingerprint/biometric — not a real WebAuthn integration" },
   ];
 
   return (
@@ -117,7 +112,7 @@ export default function AuthPage() {
           <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
             {mode === "login"
               ? "Sign in to access your dashboard"
-              : "Join RiseAble to start learning"}
+              : "Join RiseAble to find accessible jobs and schemes"}
           </p>
         </div>
 
@@ -281,7 +276,7 @@ export default function AuthPage() {
               Start Face Scan
             </button>
             <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-              Position your face within the circle and ensure good lighting
+              Demo only — no camera or real face recognition is used
             </p>
           </div>
         )}
@@ -312,7 +307,7 @@ export default function AuthPage() {
               Start Voice Auth
             </button>
             <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-              Say your registered passphrase clearly
+              Demo only — no microphone or real voice biometrics are used
             </p>
           </div>
         )}
@@ -338,7 +333,7 @@ export default function AuthPage() {
               Authenticate with Biometric
             </button>
             <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-              Touch your fingerprint sensor or use Windows Hello
+              Demo only — no WebAuthn/fingerprint hardware is used
             </p>
           </div>
         )}

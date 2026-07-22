@@ -4,11 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { Menu, X, User, LogOut, Home, BookOpen, Briefcase, Landmark, LayoutDashboard, UserCircle, MessageCircle } from "lucide-react";
+import { Menu, X, User, LogOut, Home, Briefcase, Landmark, LayoutDashboard, UserCircle, MessageCircle } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home, requireAuth: false },
-  { href: "/courses", label: "Courses", icon: BookOpen, requireAuth: true },
   { href: "/jobs", label: "Jobs", icon: Briefcase, requireAuth: true },
   { href: "/schemes", label: "Schemes", icon: Landmark, requireAuth: true },
   { href: "/chat", label: "AI Chat", icon: MessageCircle, requireAuth: false },

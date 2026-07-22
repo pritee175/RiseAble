@@ -1,22 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// In-memory user storage (replace with database in production)
-const users = new Map<string, {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  createdAt: Date;
-}>();
-
-// Demo user
-users.set('demo@riseable.com', {
-  id: '1',
-  name: 'Demo User',
-  email: 'demo@riseable.com',
-  password: 'demo123',
-  createdAt: new Date(),
-});
+import users from '@/lib/userStore';
 
 export async function POST(request: NextRequest) {
   try {

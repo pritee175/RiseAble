@@ -138,7 +138,7 @@ export function WaveDivider({ flip = false, className = "" }: { flip?: boolean; 
   );
 }
 
-/** Abstract pattern for course/job cards */
+/** Abstract pattern for job/scheme cards */
 export function CardPattern({ variant = 0 }: { variant?: number }) {
   const patterns = [
     // Circuit-like

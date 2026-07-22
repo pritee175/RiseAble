@@ -1,30 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// In-memory user storage
-const users = new Map<string, {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  bio?: string;
-  phone?: string;
-  location?: string;
-  website?: string;
-  createdAt: Date;
-}>();
-
-// Demo user
-users.set('demo@riseable.com', {
-  id: '1',
-  name: 'Demo User',
-  email: 'demo@riseable.com',
-  password: 'demo123',
-  bio: 'Passionate learner exploring new skills',
-  phone: '+91 98765 43210',
-  location: 'Mumbai, India',
-  website: 'https://example.com',
-  createdAt: new Date(),
-});
+import users from '@/lib/userStore';
 
 // GET - Fetch user profile
 export async function GET(request: NextRequest) {

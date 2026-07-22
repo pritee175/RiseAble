@@ -76,7 +76,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      text: "Hello! I'm the RiseAble AI Assistant. I can help you find courses, search for jobs, or understand government schemes. How can I help you today?",
+      text: "Hello! I'm the RiseAble AI Assistant. I can help you search for jobs or understand government schemes. How can I help you today?",
       sender: "bot",
       timestamp: new Date(),
     },
@@ -206,7 +206,6 @@ export default function ChatPage() {
   ];
 
   const quickActions = [
-    { text: "Show me courses", icon: "📚" },
     { text: "Find jobs for me", icon: "💼" },
     { text: "Government schemes", icon: "🏛️" },
     { text: "Accessibility features", icon: "♿" },
@@ -645,8 +644,8 @@ export default function ChatPage() {
                   Voice Commands Active:
                 </p>
                 <div className="grid grid-cols-2 gap-2 mt-2">
-                  <span>• &quot;Open courses&quot;</span>
                   <span>• &quot;Find jobs&quot;</span>
+                  <span>• &quot;Schemes&quot;</span>
                   <span>• &quot;Go home&quot;</span>
                   <span>• &quot;Scroll down/up&quot;</span>
                 </div>

@@ -3,7 +3,7 @@
 import { useEffect, useCallback, useRef } from "react";
 import { useAccessibility } from "@/context/AccessibilityContext";
 
-/** Voice navigation hook — listens for commands like "open courses", "go to jobs" etc. */
+/** Voice navigation hook — listens for commands like "find jobs", "open schemes" etc. */
 export function useVoiceNavigation() {
   const { voiceNavigationEnabled, announceToScreenReader } = useAccessibility();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,10 +14,7 @@ export function useVoiceNavigation() {
     announceToScreenReader(`Voice command received: ${cmd}`);
 
     // Navigation commands
-    if (cmd.includes("open courses") || cmd.includes("go to courses") || cmd.includes("courses")) {
-      window.location.href = "/courses";
-      announceToScreenReader("Navigating to courses page");
-    } else if (cmd.includes("open jobs") || cmd.includes("find jobs") || cmd.includes("jobs")) {
+    if (cmd.includes("open jobs") || cmd.includes("find jobs") || cmd.includes("jobs")) {
       window.location.href = "/jobs";
       announceToScreenReader("Navigating to jobs page");
     } else if (cmd.includes("schemes") || cmd.includes("government")) {
@@ -39,7 +36,7 @@ export function useVoiceNavigation() {
     } else if (cmd.includes("go back") || cmd.includes("back")) {
       window.history.back();
     } else {
-      announceToScreenReader(`Command not recognized: ${cmd}. Try saying: open courses, find jobs, or go home.`);
+      announceToScreenReader(`Command not recognized: ${cmd}. Try saying: find jobs, open schemes, or go home.`);
     }
   }, [announceToScreenReader]);
 
